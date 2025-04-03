@@ -8,6 +8,7 @@ import {
   withFetch,
   withInterceptors,
 } from '@angular/common/http';
+import { provideImgixLoader } from '@angular/common';
 
 const baseUrlInterceptor: HttpInterceptorFn = (req, next) => {
   const baseUrl = 'https://api.artic.edu/api/v1/';
@@ -21,6 +22,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    provideImgixLoader('https://artic-web.imgix.net'),
     provideHttpClient(withFetch(), withInterceptors([baseUrlInterceptor])),
   ],
 };

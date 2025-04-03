@@ -1,0 +1,11 @@
+<div class="artwork-item">
+  @if (artwork.image_id) {
+    <img priority [ngSrc]="getArtworkImg(artwork.image_id)" alt="{{ artwork.title }}" width="{{artwork.thumbnail.width}}" height="{{artwork.thumbnail.height}}" />
+  }
+
+  <div class="artwork-item__details">
+    <h2>{{ artwork.title }}</h2>
+    <p>Artist: {{ artwork.artist_title }}</p>
+    <p>Year: {{ artwork.fiscal_year }}</p>
+  </div>
+</div>

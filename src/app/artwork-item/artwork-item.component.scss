@@ -1,0 +1,10 @@
+.artwork-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  &__details {
+  }
+}

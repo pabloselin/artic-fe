@@ -1,0 +1,14 @@
+<div class="exhibition-item">
+  @if (exhibition.image_url) {
+    <img [ngSrc]="processImgixUrl(exhibition.image_url)" alt="" width="200" height="200"/>
+  }
+
+
+  <div class="exhibition-item__content">
+    <h2>{{ exhibition.title }}</h2>
+    <p [innerHTML]="exhibition.short_description"></p>
+    <p>{{ exhibition.aic_start_at | date }}</p>
+    <p>{{ exhibition.aic_end_at | date }}</p>
+    <p>{{ exhibition.status }}</p>
+  </div>
+</div>

@@ -1,12 +1,9 @@
 <div>
-  @if (artworks | async; as artworks) {
-    @for (artwork of artworks; track artwork.id ) {
-      <div class="artwork">
-        <h2>{{ artwork.title }}</h2>
-        <p>Artist: {{ artwork.artist_title }}</p>
-        <p>Year: {{ artwork.fiscal_year }}</p>
-        <img [src]="getArtworkImg(artwork.image_id)" alt="{{ artwork.title }}" />
+    <div class="exhibitions">
+      <h1 (click)="navigateToHome()">Exhibitions</h1>
+      <div class="exhibitions__list">
+        <router-outlet></router-outlet>
       </div>
-    }
-  }
+    </div>
+
 </div>

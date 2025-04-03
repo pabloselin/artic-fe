@@ -1,0 +1,11 @@
+@if (exhibition | async; as exhibition) {
+  <div>
+    <h1>{{ exhibition.title }}</h1>
+    <div [innerHTML]="exhibition.short_description"></div>
+
+    @if (exhibition.image_url) {
+      <img src="{{exhibition.image_url}}" alt="{{exhibition.title}}">
+    }
+
+  </div>
+}

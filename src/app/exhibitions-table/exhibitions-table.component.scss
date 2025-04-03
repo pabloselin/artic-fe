@@ -1,0 +1,25 @@
+table {
+  th,
+  td {
+    padding: 12px 6px;
+  }
+
+  tr {
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+
+  td {
+    border-bottom: 1px solid #ccc;
+  }
+
+  th {
+    cursor: pointer;
+    text-align: left;
+  }
+
+  th.active {
+    text-decoration: underline;
+  }
+}
