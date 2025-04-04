@@ -1,0 +1,23 @@
+.exhibitions-table-skeleton {
+  width: 100%;
+  background-color: #333;
+  border-radius: 5px;
+  margin: 6px 0;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #333;
+  }
+  50% {
+    background-color: #444;
+  }
+  100% {
+    background-color: #333;
+  }
+}

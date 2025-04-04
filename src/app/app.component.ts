@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ExhibitionsTableComponent } from './exhibitions-table/exhibitions-table.component';
 import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ExhibitionsTableComponent, RouterOutlet],
+  imports: [RouterOutlet],
   providers: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

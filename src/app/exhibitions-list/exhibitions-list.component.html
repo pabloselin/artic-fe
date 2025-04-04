@@ -1,0 +1,36 @@
+<div class="switcher">
+  <app-button
+    [icon]="faGripVertical"
+    [label]="'Grid View'"
+    (action)="updateLayout('grid')"
+    [isActive]="(layout | async) === 'grid'"
+  >
+  </app-button>
+  <app-button
+    [icon]="faGripVertical"
+    [label]="'Table View'"
+    (action)="updateLayout('table')"
+    [isActive]="(layout | async) === 'table'"
+  >
+  </app-button>
+</div>
+
+@if ((layout | async) === "grid") {
+  <app-exhibitions-grid-view
+    [exhibitions]="exhibitions"
+    [isLoading]="isLoading"
+    [sortBy]="(sortBy | async) ?? 'id'"
+    [sortDescending]="(sortDescending | async) ?? false"
+    (loadMore)="loadMoreExhibitions()"
+    (sortExhibitions)="updateSort($event)"
+  ></app-exhibitions-grid-view>
+} @else {
+  <app-exhibitions-table-view
+    [exhibitions]="exhibitions"
+    [isLoading]="isLoading"
+    [sortBy]="(sortBy | async) ?? 'id'"
+    [sortDescending]="(sortDescending | async) ?? false"
+    (loadMore)="loadMoreExhibitions()"
+    (sortExhibitions)="updateSort($event)"
+  ></app-exhibitions-table-view>
+}

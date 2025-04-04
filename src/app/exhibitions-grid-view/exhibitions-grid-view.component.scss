@@ -1,0 +1,37 @@
+@use "../../variables.scss" as *;
+
+.exhibitions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  column-gap: 6px;
+  row-gap: 6px;
+  &__sorter,
+  &__loadmore {
+    display: flex;
+    align-items: center;
+    background-color: #ccc;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  &__sorter {
+    &__toolbar {
+      display: flex;
+      gap: 6px;
+    }
+  }
+
+  &__loadmore {
+    justify-content: center;
+    cursor: pointer;
+    background-color: $cream;
+    color: $red;
+    font-family: "Doto", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 24px;
+    border-radius: 4px;
+    padding: 12px 24px;
+    margin: 32px;
+  }
+}

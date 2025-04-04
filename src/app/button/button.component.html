@@ -1,0 +1,8 @@
+<button class="button" (click)="onClick()" [ngClass]="{active: isActive, disabled: isDisabled}" [disabled]="isDisabled">
+  @if (icon) {
+    <fa-icon [icon]="icon"></fa-icon>
+  }
+  <span class="button__label">
+    {{ label }}
+  </span>
+</button>

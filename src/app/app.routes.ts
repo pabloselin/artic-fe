@@ -4,8 +4,8 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./exhibitions-table/exhibitions-table.component').then(
-        (m) => m.ExhibitionsTableComponent,
+      import('./exhibitions-list/exhibitions-list.component').then(
+        (m) => m.ExhibitionsList,
       ),
   },
   {

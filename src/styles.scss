@@ -1,10 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
-
-@import url("https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&display=swap");
+@use "./reset.scss";
+@import url("https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&family=Doto:wght@100..900&display=swap");
 
 body {
   font-family: "Commissioner", sans-serif;
   margin: 0;
   padding: 24px;
-  background-color: #f4f4f4;
+  background-color: #000;
+  color: white;
 }

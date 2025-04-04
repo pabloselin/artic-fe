@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideImgixLoader('https://artic-web.imgix.net'),
+    provideImgixLoader('https://www.artic.edu/iiif/2/'),
     provideHttpClient(withFetch(), withInterceptors([baseUrlInterceptor])),
   ],
 };

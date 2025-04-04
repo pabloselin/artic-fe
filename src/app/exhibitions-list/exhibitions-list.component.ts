@@ -1,34 +1,51 @@
 import { Component, Input } from '@angular/core';
 import { Exhibition } from '../../schema/artic';
-import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { ArtworksService } from '../services/artworks.service';
 import { BehaviorSubject, combineLatestWith, map, take, tap } from 'rxjs';
-import { ExhibitionsTableSkeletonComponent } from '../exhibitions-table-skeleton/exhibitions-table-skeleton.component';
 import { Router, RouterModule } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+  faSort,
+  faSortUp,
+  faSortDown,
+  faTable,
+  faGripVertical,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
+import { ExhibitionsTableViewComponent } from '../exhibitions-table-view/exhibitions-table-view.component';
+import { ExhibitionsGridViewComponent } from '../exhibitions-grid-view/exhibitions-grid-view.component';
+import { ButtonComponent } from '../button/button.component';
 
-type sortKeys = 'id' | 'title' | 'aic_start_at' | 'aic_end_at' | 'status';
+type SortKeys = 'id' | 'title' | 'aic_start_at' | 'aic_end_at' | 'status';
+type TableColumn = {
+  key: SortKeys;
+  label: string;
+};
 
 @Component({
   selector: 'app-exhibitions-table',
   standalone: true,
   imports: [
-    DatePipe,
     AsyncPipe,
     NgClass,
-    ExhibitionsTableSkeletonComponent,
+    ExhibitionsTableViewComponent,
+    ExhibitionsGridViewComponent,
+    ButtonComponent,
     RouterModule,
+    FontAwesomeModule,
   ],
-  templateUrl: './exhibitions-table.component.html',
-  styleUrl: './exhibitions-table.component.scss',
+  templateUrl: './exhibitions-list.component.html',
+  styleUrl: './exhibitions-list.component.scss',
 })
-export class ExhibitionsTableComponent {
+export class ExhibitionsList {
   private exhibitionsSubject = new BehaviorSubject<Exhibition[]>([]);
   public exhibitions = this.exhibitionsSubject.asObservable();
 
   private currentPageSubject = new BehaviorSubject<number>(1);
   public currentPage = this.currentPageSubject.asObservable();
 
-  private sortBySubject = new BehaviorSubject<sortKeys>('aic_start_at');
+  private sortBySubject = new BehaviorSubject<SortKeys>('aic_start_at');
   public sortBy = this.sortBySubject.asObservable();
 
   private sortDescendingSubject = new BehaviorSubject<boolean>(false);
@@ -39,6 +56,23 @@ export class ExhibitionsTableComponent {
 
   public pageSize = 10;
 
+  private layoutSubject = new BehaviorSubject<'table' | 'grid'>('table');
+  public layout = this.layoutSubject.asObservable();
+
+  public faSortUp = faSortUp;
+  public faSortDown = faSortDown;
+  public faSort = faSort;
+  public faTable = faTable;
+  public faGripVertical = faGripVertical;
+
+  public tableColumns: TableColumn[] = [
+    { key: 'id', label: 'ID' },
+    { key: 'title', label: 'Title' },
+    { key: 'aic_start_at', label: 'Start Date' },
+    { key: 'aic_end_at', label: 'End Date' },
+    { key: 'status', label: 'Status' },
+  ];
+
   constructor(
     private artworksService: ArtworksService,
     private router: Router,
@@ -48,7 +82,7 @@ export class ExhibitionsTableComponent {
     this.addExhibitions(1);
   }
 
-  public updateSort(sortKey: sortKeys) {
+  public updateSort(sortKey: SortKeys) {
     this.exhibitions
       .pipe(
         take(1),
@@ -92,7 +126,7 @@ export class ExhibitionsTableComponent {
 
   private sortExhibitions(
     exhibitions: Exhibition[],
-    sortKey: sortKeys,
+    sortKey: SortKeys,
     descending: boolean,
   ): Exhibition[] {
     console.log(descending);
@@ -120,7 +154,18 @@ export class ExhibitionsTableComponent {
   }
 
   public onExhibitionClick(id: string) {
-    console.log('Exhibition clicked:', id);
     this.router.navigate(['/exhibition', id]);
+  }
+
+  public getSortIcon(sortKey: SortKeys, descending: boolean): IconDefinition {
+    console.log(this.sortBySubject.value, sortKey);
+    if (this.sortBySubject.value === sortKey) {
+      return descending ? this.faSortDown : this.faSortUp;
+    }
+    return this.faSort;
+  }
+
+  public updateLayout(layout: 'table' | 'grid') {
+    this.layoutSubject.next(layout);
   }
 }

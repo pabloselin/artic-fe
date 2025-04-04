@@ -1,0 +1,61 @@
+<div class="exhibitions-table">
+  <div class="exhibitions-table__header">
+    @if (sortBy) {
+      <div class="exhibitions-table__columns">
+        @for (column of tableColumns; track column.key) {
+          <div
+            class="exhibitions-table__sort"
+            [ngClass]="{ active: sortBy === column.key }"
+            (click)="updateSort(column.key)"
+          >
+            {{ column.label }}
+            <fa-icon
+              [icon]="getSortIcon(column.key, sortDescending === true)"
+            ></fa-icon>
+          </div>
+        }
+      </div>
+    }
+  </div>
+  <div class="exhibitions-table__content">
+    @for (exhibition of exhibitions | async; track exhibition.id) {
+      <div
+        class="exhibitions-table__row"
+        [ngClass]="{
+          'exhibitions-table__row--disabled': !exhibition.image_url,
+        }"
+        (click)="onExhibitionClick(exhibition.id, !exhibition.image_url)"
+      >
+        <div>{{ exhibition.id }}</div>
+        <div class="exhibitions-table__row__title">{{ exhibition.title }}</div>
+        <div>
+          @if (exhibition.aic_start_at) {
+            {{ exhibition.aic_start_at | date: "shortDate" }}
+          } @else {
+            <span class="no-date">n/a</span>
+          }
+        </div>
+        <div>
+          @if (exhibition.aic_end_at) {
+            {{ exhibition.aic_end_at | date: "shortDate" }}
+          } @else {
+            <span class="no-date">n/a</span>
+          }
+        </div>
+        <div>{{ exhibition.status }}</div>
+      </div>
+    }
+    @if (isLoading | async) {
+      <app-exhibitions-table-skeleton></app-exhibitions-table-skeleton>
+    }
+  </div>
+</div>
+<div class="exhibitions-table__loadmore">
+  <app-button
+    (click)="loadMoreExhibitions()"
+    [isDisabled]="(isLoading | async) == true ? true : false"
+    [icon]="faPalette"
+    [label]="(isLoading | async) ? 'Loading' : 'Load more'"
+  >
+  </app-button>
+</div>
