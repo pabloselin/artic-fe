@@ -1,36 +1,47 @@
-<div class="switcher">
-  <app-button
-    [icon]="faGripVertical"
-    [label]="'Grid View'"
-    (action)="updateLayout('grid')"
-    [isActive]="(layout | async) === 'grid'"
-  >
-  </app-button>
-  <app-button
-    [icon]="faGripVertical"
-    [label]="'Table View'"
-    (action)="updateLayout('table')"
-    [isActive]="(layout | async) === 'table'"
-  >
-  </app-button>
-</div>
+<p class="exhibitions-list__info">
+  @if (isLoading | async) {
+    Fetching exhibitions...
+  } @else {
+    Fetched <strong>{{ exhibitionsLength | async }}</strong> exhibitions.
+  }
+</p>
+<div class="exhibitions-list">
+  <header>
+    <div class="switcher">
+      <app-button
+        [icon]="faGripVertical"
+        [label]="'Grid View'"
+        (action)="updateLayout('grid')"
+        [isActive]="(layout | async) === 'grid'"
+      >
+      </app-button>
+      <app-button
+        [icon]="faGripVertical"
+        [label]="'Table View'"
+        (action)="updateLayout('table')"
+        [isActive]="(layout | async) === 'table'"
+      >
+      </app-button>
+    </div>
+  </header>
 
-@if ((layout | async) === "grid") {
-  <app-exhibitions-grid-view
-    [exhibitions]="exhibitions"
-    [isLoading]="isLoading"
-    [sortBy]="(sortBy | async) ?? 'id'"
-    [sortDescending]="(sortDescending | async) ?? false"
-    (loadMore)="loadMoreExhibitions()"
-    (sortExhibitions)="updateSort($event)"
-  ></app-exhibitions-grid-view>
-} @else {
-  <app-exhibitions-table-view
-    [exhibitions]="exhibitions"
-    [isLoading]="isLoading"
-    [sortBy]="(sortBy | async) ?? 'id'"
-    [sortDescending]="(sortDescending | async) ?? false"
-    (loadMore)="loadMoreExhibitions()"
-    (sortExhibitions)="updateSort($event)"
-  ></app-exhibitions-table-view>
-}
+  @if ((layout | async) === "grid") {
+    <app-exhibitions-grid-view
+      [exhibitions]="exhibitions"
+      [isLoading]="isLoading"
+      [sortBy]="(sortBy | async) ?? 'id'"
+      [sortDescending]="(sortDescending | async) ?? false"
+      (loadMore)="loadMoreExhibitions()"
+      (sortExhibitions)="updateSort($event)"
+    ></app-exhibitions-grid-view>
+  } @else {
+    <app-exhibitions-table-view
+      [exhibitions]="exhibitions"
+      [isLoading]="isLoading"
+      [sortBy]="(sortBy | async) ?? 'id'"
+      [sortDescending]="(sortDescending | async) ?? false"
+      (loadMore)="loadMoreExhibitions()"
+      (sortExhibitions)="updateSort($event)"
+    ></app-exhibitions-table-view>
+  }
+</div>

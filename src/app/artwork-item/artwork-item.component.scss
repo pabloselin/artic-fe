@@ -1,10 +1,31 @@
+@use "../../variables.scss" as *;
+
 .artwork-item {
-  display: grid;
-  grid-template-columns: 200px 1fr;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  background-color: $cream;
+  color: $red;
+  font-family: "Doto", sans-serif;
+  font-weight: 900;
+  border-radius: 8px;
   img {
     max-width: 100%;
     height: auto;
+    border-radius: 8px;
   }
   &__details {
+    h2 {
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
+    p {
+      margin: 0;
+    }
+    span {
+      font-size: 12px;
+      color: #333;
+    }
   }
 }

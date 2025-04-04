@@ -5,9 +5,14 @@
   border: 0;
   border-radius: 6px;
   background-color: $cream;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
   &.active {
     background-color: desaturate(darken($cream, 65%), 40%);
+    color: $cream;
+  }
+  &:hover {
+    background-color: darken($red, 10%);
     color: $cream;
   }
 }

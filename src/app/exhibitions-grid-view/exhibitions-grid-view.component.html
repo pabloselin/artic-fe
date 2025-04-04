@@ -1,21 +1,32 @@
 <div class="exhibitions-grid">
-    <div class="exhibitions-grid__sorter">
-        <div class="exhibitions-grid__sorter__toolbar">
-        @for(sort of sortOptions; track sort.key) {
-            <button (click)="updateSort(sort.key)" [ngClass]="{active: sortBy === sort.key}">
-                {{ sort.label }}
-            </button>
-        }
-        </div>
-    </div>
-  @for (exhibition of exhibitions | async; track exhibition.id) {
-    <app-exhibition-card-item [exhibition]="exhibition"></app-exhibition-card-item>
-  }
-    <div class="exhibitions-grid__loadmore" (click)="loadMoreExhibitions()">
-      @if( isLoading | async)  {
-        <span>Loading ...</span>
-      } @else {
-        <span>Load More</span>
+  <div class="exhibitions-grid__sorter">
+    <h3>Order by</h3>
+    <div class="exhibitions-grid__sorter__toolbar">
+      @for (sort of sortOptions; track sort.key) {
+        <app-button
+          (action)="updateSort(sort.key)"
+          [isActive]="sortBy === sort.key"
+          [label]="sort.label"
+        >
+        </app-button>
       }
     </div>
+  </div>
+  @for (exhibition of exhibitions | async; track exhibition.id) {
+    <app-exhibition-card-item
+      [exhibition]="exhibition"
+    ></app-exhibition-card-item>
+  }
+  @if (isLoading | async) {
+    @for (row of [].constructor(10); track $index) {
+      <app-exhibition-card-skeleton></app-exhibition-card-skeleton>
+    }
+  }
+  <div class="exhibitions-grid__loadmore" (click)="loadMoreExhibitions()">
+    @if (isLoading | async) {
+      <span>Loading ...</span>
+    } @else {
+      <span>Load More</span>
+    }
+  </div>
 </div>

@@ -1,11 +1,24 @@
 <div class="artwork-item">
-  @if (artwork.image_id) {
-    <img priority [ngSrc]="getArtworkImg(artwork.image_id)" alt="{{ artwork.title }}" width="{{artwork.thumbnail.width}}" height="{{artwork.thumbnail.height}}" />
-  }
+  @if (artwork | async; as artwork) {
+    @if (artwork.image_id) {
+      <img
+        [ngSrc]="getArtworkImg(artwork.image_id)"
+        alt="{{ artwork.title }}"
+        width="{{ artwork.thumbnail.width }}"
+        height="{{ artwork.thumbnail.height }}"
+      />
+    }
 
-  <div class="artwork-item__details">
-    <h2>{{ artwork.title }}</h2>
-    <p>Artist: {{ artwork.artist_title }}</p>
-    <p>Year: {{ artwork.fiscal_year }}</p>
-  </div>
+    <div class="artwork-item__details">
+      <h2>{{ artwork.title }}</h2>
+      <p>
+        <span class="artwork-item__details__artist">{{
+          artwork.artist_title
+        }}</span>
+        @if (artwork.fiscal_year) {
+          <span> ({{ artwork.fiscal_year }})</span>
+        }
+      </p>
+    </div>
+  }
 </div>

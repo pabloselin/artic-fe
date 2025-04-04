@@ -1,0 +1,21 @@
+@use "../../variables.scss" as *;
+
+.exhibition-card-skeleton {
+  width: 100%;
+  height: 360px;
+  background-color: $cream;
+  border-radius: 4px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: desaturate($cream, 50%);
+  }
+  50% {
+    background-color: desaturate(darken($cream, 10%), 30%);
+  }
+  100% {
+    background-color: desaturate($cream, 50%);
+  }
+}

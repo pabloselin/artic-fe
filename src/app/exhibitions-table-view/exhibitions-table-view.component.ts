@@ -10,6 +10,7 @@ import {
   faTable,
   faPalette,
   faGripVertical,
+  faImages,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -43,6 +44,7 @@ export class ExhibitionsTableViewComponent {
   public tableColumns: TableColumn[] = [
     { key: 'id', label: 'ID' },
     { key: 'title', label: 'Title' },
+    { key: 'artwork_ids', label: 'Artworks' },
     { key: 'aic_start_at', label: 'Start Date' },
     { key: 'aic_end_at', label: 'End Date' },
     { key: 'status', label: 'Status' },
@@ -54,6 +56,7 @@ export class ExhibitionsTableViewComponent {
   public faTable = faTable;
   public faGripVertical = faGripVertical;
   public faPalette = faPalette;
+  public faImages = faImages;
 
   constructor(private router: Router) {}
 

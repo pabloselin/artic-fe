@@ -17,6 +17,10 @@ export interface ArticResponse {
 export interface SingleExhibitionResponse {
   data: Exhibition;
 }
+
+export interface SingleArtworkResponse {
+  data: Artwork;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -50,10 +54,14 @@ export class ArtworksService {
   }
 
   public getArtworkDetail(id: string): Observable<Artwork> {
-    return this.http.get<Artwork>(`artwork/${id}`);
+    return this.http.get<SingleArtworkResponse>(`artworks/${id}`).pipe(
+      map((response) => {
+        return response.data;
+      }),
+    );
   }
 
   public generateArtworkImg(identifier: string): string {
-    return `https://www.artic.edu/iiif/2/${identifier}/full/400,/0/default.jpg`;
+    return `${identifier}/full/400,/0/default.jpg`;
   }
 }

@@ -3,12 +3,13 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { map, Observable, switchMap } from 'rxjs';
 import { ArtworksService } from '../services/artworks.service';
 import { Exhibition } from '../../schema/artic';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { ArtworkItemComponent } from '../artwork-item/artwork-item.component';
 
 @Component({
   selector: 'app-exhibition-detail',
   standalone: true,
-  imports: [RouterModule, AsyncPipe],
+  imports: [RouterModule, AsyncPipe, DatePipe, ArtworkItemComponent],
   templateUrl: './exhibition-detail.component.html',
   styleUrl: './exhibition-detail.component.scss',
 })

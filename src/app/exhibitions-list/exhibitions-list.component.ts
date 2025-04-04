@@ -17,7 +17,6 @@ import { ExhibitionsTableViewComponent } from '../exhibitions-table-view/exhibit
 import { ExhibitionsGridViewComponent } from '../exhibitions-grid-view/exhibitions-grid-view.component';
 import { ButtonComponent } from '../button/button.component';
 
-type SortKeys = 'id' | 'title' | 'aic_start_at' | 'aic_end_at' | 'status';
 type TableColumn = {
   key: SortKeys;
   label: string;
@@ -28,7 +27,6 @@ type TableColumn = {
   standalone: true,
   imports: [
     AsyncPipe,
-    NgClass,
     ExhibitionsTableViewComponent,
     ExhibitionsGridViewComponent,
     ButtonComponent,
@@ -54,9 +52,12 @@ export class ExhibitionsList {
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
   public isLoading = this.isLoadingSubject.asObservable();
 
+  private exhibitionsLengthSubject = new BehaviorSubject<number>(0);
+  public exhibitionsLength = this.exhibitionsLengthSubject.asObservable();
+
   public pageSize = 10;
 
-  private layoutSubject = new BehaviorSubject<'table' | 'grid'>('table');
+  private layoutSubject = new BehaviorSubject<'table' | 'grid'>('grid');
   public layout = this.layoutSubject.asObservable();
 
   public faSortUp = faSortUp;
@@ -71,6 +72,7 @@ export class ExhibitionsList {
     { key: 'aic_start_at', label: 'Start Date' },
     { key: 'aic_end_at', label: 'End Date' },
     { key: 'status', label: 'Status' },
+    { key: 'artwork_ids', label: 'Artworks' },
   ];
 
   constructor(
@@ -118,7 +120,9 @@ export class ExhibitionsList {
             sortDescending,
           );
           this.exhibitionsSubject.next(sortedExhibitions);
+          this.exhibitionsLengthSubject.next(sortedExhibitions.length);
         }),
+
         tap(() => this.isLoadingSubject.next(false)),
       )
       .subscribe();
@@ -129,16 +133,30 @@ export class ExhibitionsList {
     sortKey: SortKeys,
     descending: boolean,
   ): Exhibition[] {
-    console.log(descending);
-    return exhibitions.sort((a, b) => {
-      if (a[sortKey] < b[sortKey]) {
-        return descending ? 1 : -1;
-      }
-      if (a[sortKey] > b[sortKey]) {
-        return descending ? -1 : 1;
-      }
-      return 0;
-    });
+    if (sortKey === 'artwork_ids') {
+      return exhibitions.sort((a, b) => {
+        const aCount = a.artwork_ids.length;
+        const bCount = b.artwork_ids.length;
+
+        if (aCount < bCount) {
+          return descending ? 1 : -1;
+        }
+        if (aCount > bCount) {
+          return descending ? -1 : 1;
+        }
+        return 0;
+      });
+    } else {
+      return exhibitions.sort((a, b) => {
+        if (a[sortKey] < b[sortKey]) {
+          return descending ? 1 : -1;
+        }
+        if (a[sortKey] > b[sortKey]) {
+          return descending ? -1 : 1;
+        }
+        return 0;
+      });
+    }
   }
 
   public loadMoreExhibitions() {

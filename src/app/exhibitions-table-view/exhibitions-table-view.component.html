@@ -28,6 +28,10 @@
       >
         <div>{{ exhibition.id }}</div>
         <div class="exhibitions-table__row__title">{{ exhibition.title }}</div>
+        <div class="exhibitions-table__row__artworks">
+          <fa-icon [icon]="faImages"></fa-icon>
+          {{ exhibition.artwork_ids.length }}
+        </div>
         <div>
           @if (exhibition.aic_start_at) {
             {{ exhibition.aic_start_at | date: "shortDate" }}

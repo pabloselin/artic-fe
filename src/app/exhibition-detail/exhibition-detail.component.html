@@ -1,11 +1,65 @@
 @if (exhibition | async; as exhibition) {
-  <div>
-    <h1>{{ exhibition.title }}</h1>
-    <div [innerHTML]="exhibition.short_description"></div>
+  <div class="exhibition-item">
+    <header class="exhibition-item__header">
+      <h1>{{ exhibition.title }}</h1>
+    </header>
+    <div class="exhibition-item__content-wrapper">
+      <div
+        class="exhibition-item__description"
+        [innerHTML]="exhibition.short_description"
+      ></div>
 
-    @if (exhibition.image_url) {
-      <img src="{{exhibition.image_url}}" alt="{{exhibition.title}}">
-    }
+      <div class="exhibition-item__top-wrapper">
+        @if (exhibition.image_url) {
+          <div class="exhibition-item__image">
+            <img
+              src="{{ exhibition.image_url }}"
+              alt="{{ exhibition.title }}"
+            />
+          </div>
+        }
 
+        <div class="exhibition-item__metadata">
+          <div class="exhibition-item__metadata__item">
+            ID: {{ exhibition.id }}
+          </div>
+          <div class="exhibition-item__metadata__item">
+            <a
+              href="{{ exhibition.web_url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit museum exhibition page
+            </a>
+          </div>
+          <div class="exhibition-item__metadata__item">
+            {{ exhibition.aic_start_at | date: "longDate" }} -
+            {{ exhibition.aic_end_at | date: "longDate" }}
+          </div>
+          @if (exhibition.gallery_title) {
+            <div class="exhibition-item__metadata__item">
+              {{ exhibition.gallery_title }}
+            </div>
+          }
+          <div class="exhibition-item__metadata__item">
+            @if (exhibition.artwork_ids.length) {
+              <span>{{ exhibition.artwork_ids.length }} artworks</span>
+            } @else {
+              <span>No artworks available</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      @if (exhibition.artwork_ids.length > 0) {
+        <h2>{{ exhibition.artwork_ids.length }} artworks in this exhibition</h2>
+
+        <div class="exhibition-item__artworks">
+          @for (artworkId of exhibition.artwork_ids; track $index) {
+            <app-artwork-item [artworkId]="artworkId"></app-artwork-item>
+          }
+        </div>
+      }
+    </div>
   </div>
 }

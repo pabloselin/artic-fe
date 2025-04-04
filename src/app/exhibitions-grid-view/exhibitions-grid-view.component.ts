@@ -3,11 +3,19 @@ import { Observable } from 'rxjs';
 import { Exhibition } from '../../schema/artic';
 import { ExhibitionCardItemComponent } from '../exhibition-card-item/exhibition-card-item.component';
 import { AsyncPipe, NgClass } from '@angular/common';
+import { ButtonComponent } from '../button/button.component';
+import { ExhibitionCardSkeletonComponent } from '../exhibition-card-skeleton/exhibition-card-skeleton.component';
 
 @Component({
   selector: 'app-exhibitions-grid-view',
   standalone: true,
-  imports: [ExhibitionCardItemComponent, AsyncPipe, NgClass],
+  imports: [
+    ExhibitionCardItemComponent,
+    ExhibitionCardSkeletonComponent,
+    ButtonComponent,
+    AsyncPipe,
+    NgClass,
+  ],
   templateUrl: './exhibitions-grid-view.component.html',
   styleUrl: './exhibitions-grid-view.component.scss',
 })
@@ -24,6 +32,7 @@ export class ExhibitionsGridViewComponent {
   public sortOptions: TableColumn[] = [
     { key: 'id', label: 'ID' },
     { key: 'title', label: 'Title' },
+    { key: 'artwork_ids', label: 'Artworks' },
     { key: 'aic_start_at', label: 'Start Date' },
     { key: 'aic_end_at', label: 'End Date' },
     { key: 'status', label: 'Status' },
