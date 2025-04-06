@@ -1,3 +1,33 @@
+.exhibitions {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    nav {
+      display: flex;
+      align-items: center;
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 12px;
+        li {
+          font-family: "Doto", sans-serif;
+          color: white;
+          text-transform: uppercase;
+          font-weight: 900;
+
+          a {
+            color: white;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+
 h1 {
   font-weight: normal;
   text-transform: uppercase;

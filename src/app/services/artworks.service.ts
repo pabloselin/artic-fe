@@ -27,19 +27,25 @@ export interface SingleArtworkResponse {
 export class ArtworksService {
   constructor(private http: HttpClient) {}
 
-  public getArtworks(): Observable<Artwork[]> {
-    return this.http.get<ArticResponse>('artworks/?page=1&limit=10').pipe(
-      map((response) => {
-        return response.data;
-      }),
-    );
-  }
-
   public getExhibitions(page: number, limit: number): Observable<Exhibition[]> {
-    const params = `?page=${page}&limit=${limit}`;
+    const cacheKey = `exhibitions_page_${page}_limit_${limit}`;
+    const cachedExhibitions = localStorage.getItem(cacheKey);
 
+    if (cachedExhibitions) {
+      // Return cached data as an Observable
+      return new Observable((observer) => {
+        observer.next(JSON.parse(cachedExhibitions));
+        observer.complete();
+      });
+    }
+
+    // Fetch data from the API if not in cache
+    const params = `?page=${page}&limit=${limit}`;
     return this.http.get<ArticResponse>(`exhibitions/${params}`).pipe(
       map((response) => {
+        // Cache the data in localStorage
+        localStorage.setItem('pagesLoaded', page.toString());
+        localStorage.setItem(cacheKey, JSON.stringify(response.data));
         return response.data;
       }),
     );

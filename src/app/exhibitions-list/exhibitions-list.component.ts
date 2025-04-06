@@ -55,6 +55,10 @@ export class ExhibitionsList {
   private exhibitionsLengthSubject = new BehaviorSubject<number>(0);
   public exhibitionsLength = this.exhibitionsLengthSubject.asObservable();
 
+  private cachedExhibitionsLengthSubject = new BehaviorSubject<number>(0);
+  public cachedExhibitionsLength =
+    this.cachedExhibitionsLengthSubject.asObservable();
+
   public pageSize = 10;
 
   private layoutSubject = new BehaviorSubject<'table' | 'grid'>('grid');
@@ -81,7 +85,25 @@ export class ExhibitionsList {
   ) {}
 
   ngOnInit(): void {
-    this.addExhibitions(1);
+    if (localStorage.getItem('pagesLoaded')) {
+      const pagesLoaded = Number(localStorage.getItem('pagesLoaded'));
+      const cachedExhibitions: Exhibition[] = [];
+
+      for (let i = 1; i <= pagesLoaded; i++) {
+        const cacheKey = `exhibitions_page_${i}_limit_${this.pageSize}`;
+        if (localStorage.getItem(cacheKey)) {
+          const cachedExhibitionsData = JSON.parse(
+            localStorage.getItem(cacheKey) || '[]',
+          );
+          cachedExhibitions.push(...(cachedExhibitionsData as Exhibition[]));
+        }
+      }
+      this.currentPageSubject.next(pagesLoaded);
+      this.exhibitionsSubject.next(cachedExhibitions);
+      this.cachedExhibitionsLengthSubject.next(cachedExhibitions.length);
+    } else {
+      this.addExhibitions(1);
+    }
   }
 
   public updateSort(sortKey: SortKeys) {
@@ -111,17 +133,32 @@ export class ExhibitionsList {
     return this.artworksService
       .getExhibitions(page, this.pageSize)
       .pipe(
-        combineLatestWith(this.exhibitions, this.sortBy, this.sortDescending),
+        combineLatestWith(
+          this.exhibitions,
+          this.sortBy,
+          this.sortDescending,
+          this.cachedExhibitionsLength,
+        ),
         take(1),
-        map(([exhibitions, prevexhibitions, sortBy, sortDescending]) => {
-          const sortedExhibitions = this.sortExhibitions(
-            [...prevexhibitions, ...exhibitions],
+        map(
+          ([
+            exhibitions,
+            prevexhibitions,
             sortBy,
             sortDescending,
-          );
-          this.exhibitionsSubject.next(sortedExhibitions);
-          this.exhibitionsLengthSubject.next(sortedExhibitions.length);
-        }),
+            cachedExhibitions,
+          ]) => {
+            const sortedExhibitions = this.sortExhibitions(
+              [...prevexhibitions, ...exhibitions],
+              sortBy,
+              sortDescending,
+            );
+            this.exhibitionsSubject.next(sortedExhibitions);
+            this.exhibitionsLengthSubject.next(
+              sortedExhibitions.length - cachedExhibitions,
+            );
+          },
+        ),
 
         tap(() => this.isLoadingSubject.next(false)),
       )

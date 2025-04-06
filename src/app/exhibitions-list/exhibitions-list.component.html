@@ -2,7 +2,10 @@
   @if (isLoading | async) {
     Fetching exhibitions...
   } @else {
-    Fetched <strong>{{ exhibitionsLength | async }}</strong> exhibitions.
+    Fetched <strong>{{ exhibitionsLength | async }}</strong> exhibitions. ({{
+      cachedExhibitionsLength | async
+    }}
+    loaded from cache)
   }
 </p>
 <div class="exhibitions-list">

@@ -1,0 +1,25 @@
+@use "../../variables" as *;
+
+.about {
+  &__content {
+    padding: 20px 0;
+    color: #ccc;
+    ::ng-deep {
+      h1,
+      h2,
+      h3 {
+        font-family: "Doto", sans-serif;
+        text-transform: uppercase;
+      }
+
+      a {
+        color: lighten($red, 30%);
+        text-decoration: none;
+        &:hover {
+          color: $red;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

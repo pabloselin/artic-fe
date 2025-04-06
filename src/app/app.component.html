@@ -1,9 +1,20 @@
 <div>
-    <div class="exhibitions">
+  <div class="exhibitions">
+    <header class="exhibitions__header">
       <h1 (click)="navigateToHome()">Art Institute of Chicago: Exhibitions</h1>
-      <div class="exhibitions__list">
-        <router-outlet></router-outlet>
-      </div>
+      <nav>
+        <ul>
+          <li>
+            <a routerLink="/">Home</a>
+          </li>
+          <li>
+            <a routerLink="/about">About</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="exhibitions__list">
+      <router-outlet></router-outlet>
     </div>
-
+  </div>
 </div>
