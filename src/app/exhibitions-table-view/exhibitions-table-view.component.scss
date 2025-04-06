@@ -8,6 +8,11 @@
     display: grid;
     grid-template-columns: 100px 1fr 160px 160px 160px 160px;
     padding: 12px;
+    @media (max-width: 768px) {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
   }
 
   &__sort {
@@ -20,6 +25,11 @@
   &__row {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+
+    @media (max-width: 768px) {
+      padding: 12px;
+      border: 1px dashed #ccc;
+    }
 
     &--disabled {
       opacity: 0.3;

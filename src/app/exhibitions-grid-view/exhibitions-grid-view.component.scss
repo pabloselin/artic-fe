@@ -30,6 +30,16 @@
       gap: 12px;
       flex-direction: column;
     }
+    @media (max-width: 768px) {
+      margin: 0;
+      h3 {
+        margin-top: 0;
+      }
+      &__toolbar {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
   }
 
   &__loadmore {
