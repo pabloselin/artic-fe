@@ -5,7 +5,6 @@ import { ArtworksService } from '../services/artworks.service';
 import { Exhibition } from '../../schema/artic';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { ArtworkItemComponent } from '../artwork-item/artwork-item.component';
-import { USE_BASE_URL_INTERCEPTOR } from '../app.config';
 
 @Component({
   selector: 'app-exhibition-detail',
@@ -13,12 +12,6 @@ import { USE_BASE_URL_INTERCEPTOR } from '../app.config';
   imports: [RouterModule, AsyncPipe, DatePipe, ArtworkItemComponent],
   templateUrl: './exhibition-detail.component.html',
   styleUrl: './exhibition-detail.component.scss',
-  providers: [
-    {
-      provide: USE_BASE_URL_INTERCEPTOR,
-      useValue: true,
-    },
-  ],
 })
 export class ExhibitionDetailComponent {
   public exhibition: Observable<Exhibition>;

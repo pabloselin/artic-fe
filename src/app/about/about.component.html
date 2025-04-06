@@ -1,5 +1,7 @@
 <div class="about">
   @if (aboutContent | async; as aboutContent) {
     <div class="about__content" [innerHTML]="marked(aboutContent)"></div>
+  } @else {
+    <p>Loading...</p>
   }
 </div>

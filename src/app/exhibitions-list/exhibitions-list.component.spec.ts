@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExhibitionsList } from './exhibitions-list.component';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('ExhibitionsTableComponent', () => {
   let component: ExhibitionsList;
@@ -9,6 +10,7 @@ describe('ExhibitionsTableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ExhibitionsList],
+      providers: [provideHttpClient()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ExhibitionsList);

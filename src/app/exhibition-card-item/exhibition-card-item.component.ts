@@ -28,7 +28,7 @@ export class ExhibitionCardItemComponent implements OnInit {
   }
 
   public navigateToExhibitionDetail(): void {
-    if (!this.exhibition.image_url) return;
+    if (!this.exhibition?.image_url) return;
 
     this.router.navigate(['/exhibition', this.exhibition.id]);
   }

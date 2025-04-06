@@ -1,28 +1,30 @@
-<div class="exhibition-card" (click)="navigateToExhibitionDetail()" [ngClass]="{ 'exhibition-card--disabled': !exhibition.image_url }">
-  <span class="exhibition-card__id">
-    ID: {{ exhibition.id }}
-  </span>
+<div
+  class="exhibition-card"
+  (click)="navigateToExhibitionDetail()"
+  [ngClass]="{ 'exhibition-card--disabled': !exhibition?.image_url }"
+>
+  <span class="exhibition-card__id"> ID: {{ exhibition?.id }} </span>
 
-  @if (exhibition.artwork_ids.length) {
+  @if (exhibition?.artwork_ids.length) {
     <span class="exhibition-card__artworks">
       <fa-icon [icon]="faImages"></fa-icon>
-      {{ exhibition.artwork_ids.length }}
+      {{ exhibition?.artwork_ids.length }}
     </span>
   }
 
-
   <div class="exhibition-card__date">
-    From: {{ exhibition.aic_start_at | date: 'shortDate' }} - To: {{ exhibition.aic_end_at | date: 'shortDate' }}
+    From: {{ exhibition?.aic_start_at | date: "shortDate" }} - To:
+    {{ exhibition?.aic_end_at | date: "shortDate" }}
   </div>
-  @if (exhibition.image_url) {
-    <img [src]="exhibition.image_url" alt=""/>
+  @if (exhibition?.image_url) {
+    <img [src]="exhibition?.image_url" alt="" />
   } @else {
     <div class="exhibition-card__placeholder"></div>
   }
   <div class="exhibition-card__content">
-    <h2>{{ exhibition.title }}</h2>
+    <h2>{{ exhibition?.title }}</h2>
     <span class="exhibition-card__status">
-      {{ exhibition.status }}
+      {{ exhibition?.status }}
     </span>
   </div>
 </div>
